@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>云主机</title>
@@ -11,6 +11,8 @@
 <div class="login-layout">
     <div class="login-container">
         <div class="login-inner animated fadeInDown">
+            <form action="/ssh/connect" method="post" enctype="application/x-www-form-urlencoded">
+
             <div class="login-icon"
                  style="transition-delay: 0ms;
                  background-image: url('https://share-10039692.file.myqcloud.com/lab/ac197229e6/logo/cstp8um1v2/Linux.png');">
@@ -18,21 +20,25 @@
             <h3 class="login-title">Cloud SSH ~</h3>
             <div class="login-item" title="主机IP地址">
                 <label class="login-item-title"><i class="icon"></i></label>
-                <input type="text" placeholder="主机 IP 地址" class="login-item-input" id="hostname"/>
+                <input type="text" placeholder="主机 IP 地址" class="login-item-input" id="hostname" name="hostname" />
             </div>
             <div class="login-item" title="账号">
                 <label class="login-item-title"><i class="icon"></i></label>
-                <input type="text" placeholder="账号" class="login-item-input" id="username"/>
+                <input type="text" placeholder="账号" class="login-item-input" id="username" name="username"/>
             </div>
             <div class="login-item" title="密码">
                 <label class="login-item-title"><i class="icon"></i></label>
-                <input type="text" placeholder="密码" class="login-item-input" id="password"/>
+                <input type="password" placeholder="密码" class="login-item-input" id="password" name="password"/>
             </div>
             <div class="login-ft">
-                <button class="login-btn block disabled" id="connect">
+                <button type="submit" class="login-btn block disabled" disabled="disabled" id="connect">
                     <span class="text">连接云主机</span>
                 </button>
             </div>
+                <div class="login-title" style="margin-top: 10px;color:red;">
+                    <span th:text="${error}"></span>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -52,12 +58,15 @@
         password = $('#password').val();
 
         if (hostname != undefined && username != undefined) {
+            $('#connect').removeAttr('disabled');
             $('#connect').removeClass('disabled');
         }
         if (password.length == 0) {
+            $('#connect').attr('disabled',"disabled");
             $('#connect').addClass('disabled');
         }
-    })
+    });
+
 </script>
 <style type="text/css">
     input {

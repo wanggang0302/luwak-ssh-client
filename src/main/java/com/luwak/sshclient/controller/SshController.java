@@ -9,8 +9,8 @@ import com.luwak.sshclient.utils.Command;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +26,7 @@ import java.io.InputStream;
 public class SshController {
 
     @PostMapping("/connect")
-    public String connect(@RequestBody String hostname, String username, String password, Model model) {
+    public String connect(@RequestParam String hostname, @RequestParam String username, @RequestParam String password, Model model) {
 
         int port = 22;
 
@@ -47,8 +47,12 @@ public class SshController {
 
         } catch (JSchException e) {
             e.printStackTrace();
+            model.addAttribute("error","连接失败！");
+            return "login";
         } catch (IOException e) {
             e.printStackTrace();
+            model.addAttribute("error","连接失败！");
+            return "login";
         }
         return "index";
     }
