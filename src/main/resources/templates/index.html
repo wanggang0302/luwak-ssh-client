@@ -3,8 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/css/xterm.css" rel="stylesheet">
 </head>
 <body>
-<p th:text="'Hello！, ' + ${name} + '!'" >3333</p>
+<p th:text="'Hello！, ' + ${name} + '!'"></p>
+<div id="terminal-container"></div>
 </body>
+<script src="/js/fit.js"></script>
+<script src="/js/xterm.js"></script>
+<script type="text/javascript">
+    //init
+    // var xterm = new Terminal({
+    //     cols: 120,
+    //     rows: 24,
+    //     cursorBlink: 5,
+    //     scrollback: 100,
+    //     tabStopWidth: 4
+    // });
+    // xterm.open(document.getElementById("#terminal-container"));
+
+    var xterm = new Terminal();
+    var wsurl = 'ws://localhost:8080/sshSocket/140.143.153.135/22/root/cxc19941217';
+    xterm.open(document.getElementById('#terminal-container'));
+    ws = new WebSocket(wsurl);
+
+    ws.onerror = function () {
+        console.log("error occurred!");
+    };
+
+    ws.onmessage = function(event) {
+        term.write(event.data);
+    };
+
+    ws.onopen = function () {
+        console.log("connection opened!");
+    }
+
+    ws.onclose = function (event) {
+        //关闭连接
+        console.log("connection closed!");
+        websocket.close();
+    };
+
+    //xterm 键盘响应事件
+    xterm.on('data', function($data) {
+        ws.send($data);
+    });
+
+</script>
 </html>

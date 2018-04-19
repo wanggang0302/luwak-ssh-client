@@ -45,8 +45,11 @@
 			<artifactId>hutool-all</artifactId>
 			<version>4.0.9</version>
 		</dependency>
-
-
+		<!-- springboot websocket -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
 
 
 		<dependency>
