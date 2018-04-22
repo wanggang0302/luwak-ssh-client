@@ -16,4 +16,9 @@ public class PageController {
     public String toLogin() {
         return "login";
     }
+
+    @RequestMapping("/shell")
+    public String toshell() {
+        return "new";
+    }
 }

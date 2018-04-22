@@ -7,13 +7,31 @@
 </head>
 <body>
 <p th:text="'Hello！, ' + ${name} + '!'"></p>
-<div id="terminal-container"></div>
+<div id="terminal"></div>
 </body>
 <script src="/js/fit.js"></script>
 <script src="/js/xterm.js"></script>
-<script type="text/javascript">
+<script th:inline="javascript">
     //init
     //xterm3 doc https://github.com/xtermjs/xterm.js/tree/release/3.0
+    //xterm3 doc https://xtermjs.org/
+
+
+    var term = new Terminal();
+    term.open(document.getElementById('#terminal'));
+    term.write([[${name}]] + '$')
+    //dom元素
+    console.log(term.element.classList);
+    //所有输入终端的textarea元素
+    term.textarea.onkeydown = function (e) {
+        console.log('User pressed key with keyCode: ', e.keyCode);
+    }
+    term.fit();
+    fit.fit(term);
+
+
+
+
     // var xterm = new Terminal({
     //     cols: 120,
     //     rows: 24,
@@ -21,35 +39,41 @@
     //     scrollback: 100,
     //     tabStopWidth: 4
     // });
+    // var xterm = new Terminal();
     // xterm.open(document.getElementById("#terminal-container"));
-
-    var xterm = new Terminal();
-    var wsurl = 'ws://localhost:8080/sshSocket/140.143.153.135/22/root/cxc19941217';
-    xterm.open(document.getElementById('#terminal-container'));
-    ws = new WebSocket(wsurl);
-
-    ws.onerror = function () {
-        console.log("error occurred!");
-    };
-
-    ws.onmessage = function(event) {
-        term.write(event.data);
-    };
-
-    ws.onopen = function () {
-        console.log("connection opened!");
-    }
-
-    ws.onclose = function (event) {
-        //关闭连接
-        console.log("connection closed!");
-        websocket.close();
-    };
-
-    //xterm 键盘响应事件
-    xterm.on('data', function($data) {
-        ws.send($data);
-    });
+    // xterm.applyA
+    // xterm.fit();
+    // xterm.write('Hello from \033[1;3;31mxterm.js\033[0m $ ')
+    // xterm.on('data', function($data) {
+    //     ws.send($data);
+    // });
+    // var xterm = new Terminal();
+    // var wsurl = 'ws://localhost:8080/sshSocket/140.143.153.135/22/root/cxc19941217';
+    // xterm.open(document.getElementById('#terminal-container'));
+    // ws = new WebSocket(wsurl);
+    //
+    // ws.onerror = function () {
+    //     console.log("error occurred!");
+    // };
+    //
+    // ws.onmessage = function(event) {
+    //     term.write(event.data);
+    // };
+    //
+    // ws.onopen = function () {
+    //     console.log("connection opened!");
+    // }
+    //
+    // ws.onclose = function (event) {
+    //     //关闭连接
+    //     console.log("connection closed!");
+    //     websocket.close();
+    // };
+    //
+    // //xterm 键盘响应事件
+    // xterm.on('data', function($data) {
+    //     ws.send($data);
+    // });
 
 </script>
 </html>
