@@ -1,4 +1,4 @@
-package com.luwak.sshclient.webssh.websocket;
+package com.luwak.sshclient.webssh.remote;
 
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;

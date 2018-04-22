@@ -1,4 +1,4 @@
-package com.luwak.sshclient.webssh.websocket;
+package com.luwak.sshclient.webssh.remote;
 
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
